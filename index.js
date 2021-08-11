@@ -61,6 +61,29 @@ app.delete('/api/persons/:id', (request, response) => {
   response.status(204).end()
 })
 
+// generate a new id for the phonebook entry
+const generateId = () => {
+  return Math.round(Math.random()*99999999)
+}
+
+// add person to phonebook
+app.post('/api/persons', (request, response) => {
+
+    if(request.body.name && request.body.number) { 
+        const id = generateId()
+        const person = request.body
+        person.id = id
+
+        persons.concat(person)
+        response.json(person)
+    }
+    else {
+        return response.status(400).json({ 
+            error: 'Information missing'
+        })
+    }
+})
+
 const PORT = 3001
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`)
