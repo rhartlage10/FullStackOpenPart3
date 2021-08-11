@@ -68,19 +68,27 @@ const generateId = () => {
 
 // add person to phonebook
 app.post('/api/persons', (request, response) => {
+  const body = request.body
 
-    if(request.body.name && request.body.number) { 
-        const id = generateId()
-        const person = request.body
-        person.id = id
+    if(body.name && body.number) { 
+        const person = {
+          name: body.name,
+          number: body.number,
+          id: generateId()
+        }
+        const copy = persons.find(p => p.name === person.name)
 
-        persons.concat(person)
-        response.json(person)
-    }
-    else {
-        return response.status(400).json({ 
-            error: 'Information missing'
+        if(!copy) {
+            persons = persons.concat(person)
+            response.json(person)
+        }
+        else return response.status(400).json({
+            error: 'The name must be unique'
         })
+    }  else {
+      return response.status(400).json({ 
+          error: 'The name or number is missing'
+      })
     }
 })
 
