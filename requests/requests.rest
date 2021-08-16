@@ -1,14 +1,14 @@
 ### Get list of persons
-GET http://localhost:3001/api/persons/
+GET http://localhost:3001/api/persons
 
 ### Delete person 2  
 DELETE http://localhost:3001/api/persons/2
 
 ### Add person
-POST http://localhost:3001/api/persons/
+POST http://localhost:3001/api/persons
 Content-Type: application/json
 
 {
-    "name": "John",
+    "name": "James",
     "number": "11-11-111"
 }
